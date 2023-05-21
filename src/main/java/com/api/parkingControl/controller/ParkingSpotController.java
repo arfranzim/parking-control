@@ -1,6 +1,6 @@
 package com.api.parkingControl.controller;
 
-import com.api.parkingControl.Util.BusinessValidation;
+import com.api.parkingControl.util.BusinessValidation;
 import com.api.parkingControl.dto.ParkingSpotDTO;
 import com.api.parkingControl.model.ParkingSpot;
 import com.api.parkingControl.service.ParkingSpotService;

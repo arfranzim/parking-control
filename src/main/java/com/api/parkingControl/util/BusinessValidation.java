@@ -1,4 +1,4 @@
-package com.api.parkingControl.Util;
+package com.api.parkingControl.util;
 
 import com.api.parkingControl.dto.ParkingSpotDTO;
 import com.api.parkingControl.repository.ParkingSpotRepository;
