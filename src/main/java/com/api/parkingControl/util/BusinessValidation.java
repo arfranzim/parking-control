@@ -2,14 +2,18 @@ package com.api.parkingControl.util;
 
 import com.api.parkingControl.dto.ParkingSpotDTO;
 import com.api.parkingControl.repository.ParkingSpotRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BusinessValidation {
 
-    @Autowired
-    private static ParkingSpotRepository parkingSpotRepository;
+    private final ParkingSpotRepository parkingSpotRepository;
 
-    public static String spotValidate(ParkingSpotDTO parkingSpotDTO) {
+    public BusinessValidation(ParkingSpotRepository parkingSpotRepository) {
+        this.parkingSpotRepository = parkingSpotRepository;
+    }
+
+    public String spotValidate(ParkingSpotDTO parkingSpotDTO) {
         if(existsByLicensePlateCar(parkingSpotDTO.getLicensePlateCar())) {
             return "Conflict: License Plate Car is already in use!";
         }
@@ -17,20 +21,20 @@ public class BusinessValidation {
             return "Conflict: Parking Spot is already in use!";
         }
         if(existsByApartmentAndBlock(parkingSpotDTO.getApartment(), parkingSpotDTO.getBlock())) {
-            return "Conflict: License Plate Car is already in use!";
+            return "Conflict: Apartment and block is already in use!";
         }
         return null;
     }
 
-    private static boolean existsByLicensePlateCar(String licensePlateCar) {
+    private boolean existsByLicensePlateCar(String licensePlateCar) {
         return parkingSpotRepository.existsByLicensePlateCar(licensePlateCar);
     }
 
-    private static boolean existsByParkingSpotNumber(String parkingSpotNumber) {
+    private boolean existsByParkingSpotNumber(String parkingSpotNumber) {
         return parkingSpotRepository.existsByParkingSpotNumber(parkingSpotNumber);
     }
 
-    private static boolean existsByApartmentAndBlock(String apartment, String block) {
+    private boolean existsByApartmentAndBlock(String apartment, String block) {
         return parkingSpotRepository.existsByApartmentAndBlock(apartment, block);
     }
 }

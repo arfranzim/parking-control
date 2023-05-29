@@ -5,10 +5,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
-
 @Repository
 public interface ParkingSpotRepository extends MongoRepository<ParkingSpot, String> {
+
+    @SuppressWarnings({"unchecked", "NullableProblems"})
     @Transactional
     ParkingSpot save(ParkingSpot parkingSpot);
 

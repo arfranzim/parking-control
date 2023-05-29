@@ -1,9 +1,9 @@
 package com.api.parkingControl.controller;
 
-import com.api.parkingControl.util.BusinessValidation;
 import com.api.parkingControl.dto.ParkingSpotDTO;
 import com.api.parkingControl.model.ParkingSpot;
 import com.api.parkingControl.service.ParkingSpotService;
+import com.api.parkingControl.util.BusinessValidation;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,18 +21,23 @@ import java.util.Objects;
 public class ParkingSpotController {
 
     private final ParkingSpotService parkingSpotService;
+    private final BusinessValidation businessValidation;
     public static final String NOT_FOUND = "Parking spot not found.";
     public static final String SUCCESSFULLY_DELETED = "Parking spot delete successfully.";
 
-    public ParkingSpotController(ParkingSpotService parkingSpotService) {
+    public ParkingSpotController(ParkingSpotService parkingSpotService, BusinessValidation businessValidation) {
         this.parkingSpotService = parkingSpotService;
+        this.businessValidation = businessValidation;
     }
+
+    @GetMapping("/api")
+    ResponseEntity<Object> healthCheck() { return ResponseEntity.status(HttpStatus.OK).build(); }
 
     @PostMapping()
     ResponseEntity<Object> save(@RequestBody @Valid ParkingSpotDTO parkingSpotDTO) {
-        String CONFLICT = BusinessValidation.spotValidate(parkingSpotDTO);
+        String CONFLICT = businessValidation.spotValidate(parkingSpotDTO);
         if (Objects.nonNull(CONFLICT)) return ResponseEntity.status(HttpStatus.CONFLICT).body(CONFLICT);
-        return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.save(parkingSpotDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(parkingSpotService.save(parkingSpotDTO));
     }
 
     @GetMapping
@@ -55,7 +60,7 @@ public class ParkingSpotController {
         if (Objects.isNull(parkingSpotService.delete(id))) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(NOT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(SUCCESSFULLY_DELETED);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(SUCCESSFULLY_DELETED);
     }
 
     @PutMapping("/{id}")
@@ -65,6 +70,6 @@ public class ParkingSpotController {
         if(Objects.isNull(updated)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(NOT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(updated);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(updated);
     }
 }
