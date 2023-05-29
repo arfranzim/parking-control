@@ -46,7 +46,7 @@ public class ParkingSpotControllerTest {
     public void save() throws Exception {
         mvc.perform( MockMvcRequestBuilders
                         .post("/parking-spot")
-                        .content(MOCK_CONTROLLER.getParkingSpotDTO())
+                        .content(MockController.getParkingSpotDTO())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
@@ -85,7 +85,7 @@ public class ParkingSpotControllerTest {
                                                 .thenReturn(ParkingSpotDTO.builder().build());
         mvc.perform( MockMvcRequestBuilders
                         .put("/parking-spot/{id}", "id")
-                        .content(MOCK_CONTROLLER.getParkingSpotDTO())
+                        .content(MockController.getParkingSpotDTO())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

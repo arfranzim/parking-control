@@ -3,7 +3,7 @@ package com.api.parkingControl.controller;
 import com.api.parkingControl.dto.ParkingSpotDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class MOCK_CONTROLLER {
+public class MockController {
 
     public static String getParkingSpotDTO() {
         return asJsonString(ParkingSpotDTO.builder()
