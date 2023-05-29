@@ -70,6 +70,6 @@ public class ParkingSpotController {
         if(Objects.isNull(updated)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(NOT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(updated);
+        return ResponseEntity.status(HttpStatus.OK).body(updated);
     }
 }
